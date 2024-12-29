@@ -1,5 +1,5 @@
 Using terraform to setup environment AWS
-    install terraform 
+    install terraform  
     terraform init
     terraform apply
 
