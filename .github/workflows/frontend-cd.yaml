@@ -64,7 +64,7 @@ jobs:
     - name: Build, tag, and push the image to Amazon ECR
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: ${{ vars.AWS_ECR_REPOSITORY_WEB }}
+        ECR_REPOSITORY: 'frontend'
         IMAGE_TAG: ${{ github.sha }}
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest --build-arg=REACT_APP_MOVIE_API_URL=${{ vars.APP_MOVIE_API_URL }} .
@@ -84,6 +84,7 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ secrets.AWS_REGION }}
+        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
     # Make sure you're kubeconfig is configured for the EKS cluster
     - name: Update a kubeconfig file
       env:
@@ -101,7 +102,7 @@ jobs:
     - name: Apply the manifests to the cluster
       env:
         ECR_REGISTRY: ${{ steps.login-ecr-deploy.outputs.registry }}
-        ECR_REPOSITORY: ${{ vars.AWS_ECR_REPOSITORY_WEB }}
+        ECR_REPOSITORY: 'frontend'
         IMAGE_TAG: ${{ github.sha }}
       run: |
         cd ./starter/frontend/k8s
