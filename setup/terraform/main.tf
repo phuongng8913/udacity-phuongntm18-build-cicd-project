@@ -313,7 +313,7 @@ resource "aws_iam_role_policy_attachment" "codebuild" {
 # Github Action role
 ####################
 resource "aws_iam_user" "github_action_user" {
-  name = "github-action-user"
+  name = "githuhb-user"
 }
 
 resource "aws_iam_user_policy" "github_action_user_permission" {
@@ -324,7 +324,7 @@ resource "aws_iam_user_policy" "github_action_user_permission" {
 data "aws_iam_policy_document" "github_policy" {
   statement {
     effect    = "Allow"
-    actions   = ["ecr:*", "eks:*", "ec2:*"]
+    actions   = ["ecr:*", "eks:*", "ec2:*", "iam:GetUser"]
     resources = ["*"]
   }
 }
